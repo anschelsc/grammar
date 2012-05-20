@@ -43,7 +43,12 @@ func (g Grammar) execOne(w io.Writer, s string) (int, error) {
 
 func New(r io.Reader) (*Grammar, error) {
 	buf := bufio.NewReader(r)
-	g := &Grammar{make(map[string][][]string), "Sentence"}
+	g := &Grammar{data: make(map[string][][]string)}
+	start, err := buf.Peek(80)
+	if err != nil {
+		return nil, err
+	}
+	g.start = string(bytes.Fields(start)[0])
 	line, err := buf.ReadSlice('.')
 	for ; err == nil; line, err = buf.ReadSlice('.') {
 		splat := bytes.Fields(line) // First field is left side, last is ".".
