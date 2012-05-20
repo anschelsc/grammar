@@ -25,9 +25,9 @@ func (g Grammar) Execute(w io.Writer) (int, error) {
 func (g Grammar) execOne(w io.Writer, s string) (int, error) {
 	result, ok := g.data[s]
 	if !ok {
-		toWrite := make([]byte, len(s) + 1)
+		toWrite := make([]byte, len(s)+1)
 		copy(toWrite, s)
-		toWrite[len(toWrite) - 1] = ' '
+		toWrite[len(toWrite)-1] = ' '
 		return w.Write(toWrite)
 	}
 	count := 0
